@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+         <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <title>contact</title>
+         <style>
+            *{
+                margin:0;
+                padding:0;
+            }
+            .contact{
+                width: 500px;
+                height: 800px;
+                margin: auto;
+                margin-Top: 50px;
+                background-color:rgb(15, 85, 85);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center
+            }
+            .title{
+                font-size: 30px;
+                font-weight: bold;
+                color: rgb(255, 255, 255);
+                text-align: center;
+                margin: 20px;
+            }
+            .content{
+                width: 80%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                
+            }
+            .choice{
+                display: flex;
+                gap: 20px;
+                align-items: center;
+            }
+            .choice label{      
+                color: white;
+            }
+            .radio{
+                width: 15px;
+                height: 15px;   
+            }
+            .info{
+                display: flex;
+                align-self: start;
+                flex-direction: column;
+                color: white;
+                width: 100%;
+                gap: 10px;
+            }
+            textarea{
+                width: 100%;
+                height: auto;
+                padding : 5px;
+                box-sizing: border-box;
+                background-color:rgb(15, 85, 85);
+                border: none;
+                border-bottom: 2px solid rgb(255, 255, 255);
+                outline: none;
+                color: rgb(255, 255, 255);
+                resize: none;   
+            }
+            .summit{
+                width: 80px;
+                align-self: flex-end;
+                margin-top : 20px;
+            }
+            .summit button{
+                width: 100%;
+                height: 40px;
+                background-color: antiquewhite;
+                border-radius: 10px;
+            }
+         </style>
+     </head>
+     <body>
+        
+
+        <div class="contact">
+            <div class="title">CONTACT US</div>
+            <div class="content">
+
+                <div class="choice">
+                    <input type="radio" class="radio">
+                    <label>Say HI</label>
+                
+                    <input type="radio" class="radio">
+                    <label>Get a Quote</label>
+                </div>
+                
+                <div class="info">
+                    <label>Name</label>
+                    <textarea></textarea>
+                    <label>Email</label>
+                    <textarea></textarea>
+                    <label>Message</label>
+                    <textarea></textarea>
+                </div>
+                <div class="summit">
+                    <button>Summit</button>
+                </div>
+            </div> 
+        </div>
+
+     </body>
+</html>
