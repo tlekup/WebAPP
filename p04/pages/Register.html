@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Register</title>
+        <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .register{
+            width: 700px;
+            height: 500px;
+            margin: auto; 
+            margin-Top: 50px;
+            background-color:rgb(245, 245, 245);
+            border: 2px solid rgb(0, 0, 0);
+            display: flex;
+            flex-direction: column;
+
+        }
+        .register h1{
+            font-size: 30px;
+            font-weight: bold;
+            align-self: flex-start;
+            margin: 40px 40px 0px 40px;
+        }
+        .content{
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            text-align: flex-start;
+            gap: 10px;
+            margin: 40px ;
+        }
+        .row{
+            display: flex;
+            gap: 100px;
+            flex-direction: row;
+        }
+        .column{
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+        }
+        .register button{
+            width: 80px;
+            height:auto;
+            align-self: flex-start;
+            text-align: center;
+            margin : 40px;
+            background-color: orange;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="register">
+            <h1>Register</h1>
+            <div class="content">
+                <div class="row">
+                    <div class="column">
+                        Firstname
+                        <input type="text">
+                    </div>
+                    <div class="column">
+                        Lastname
+                        <input type="text">
+                    </div>
+                </div>
+                Email
+                <input type="text">
+                <div class="row">
+                    <div class="column">
+                        Phone Number
+                        <input type="text">
+                    </div>
+                    <div class="column">
+                        Website
+                        <input type="text">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column">
+                        Password
+                        <input type="password">
+                    </div>
+                    <div class="column">
+                        confirm Password
+                        <input type="password">
+                    </div>
+                </div>
+            </div>
+             <button>Register</button>
+        </div>
+    </body>
+</html
