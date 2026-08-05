@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post UI</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f0f2f5;
+    display:flex;
+    justify-content:center;
+    padding:40px;
+}
+
+.post{
+    width:500px;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+    overflow:hidden;
+}
+
+/* ส่วนหัว */
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:15px;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+}
+
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#1877f2;
+    margin-right:10px;
+}
+
+.avatar img{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    margin-right:10px;
+}
+
+.info h3{
+    font-size:16px;
+}
+
+.info p{
+    font-size:12px;
+    color:gray;
+}
+
+.menu{
+    font-size:22px;
+    cursor:pointer;
+}
+
+/* ข้อความโพสต์ */
+.content{
+    padding:0 15px 15px;
+    font-size:15px;
+    line-height:1.5;
+}
+
+/* รูปภาพ */
+.image{
+    width:100%;
+    height:300px;
+}
+.image img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+/* จำนวน Like */
+.count{
+    padding:12px 15px;
+    color:#666;
+    border-bottom:1px solid #ddd;
+}
+
+/* ปุ่ม */
+.actions{
+    display:flex;
+}
+
+.actions button{
+    flex:1;
+    height:45px;
+    border:none;
+    background:white;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.actions button:hover{
+    background:#f2f2f2;
+}
+</style>
+
+</head>
+<body>
+
+<div class="post">
+
+    <div class="header">
+        <div class="profile">
+            <div class="avatar"> <img src="../image/tle.jpg"> </div>
+        
+            <div class="info">
+                <h3>Tanawat</h3>
+                <p>2 hrs · 🌍</p>
+            </div>
+        </div>
+
+        <div class="menu">⋯</div>
+    </div>
+
+    <div class="content">
+        raining again 😒
+    </div>
+
+    <div class="image">
+        <img src="../image/rain.jpg">
+    </div>
+
+    <div class="count">
+        👍 1.2K Likes
+    </div>
+
+    <div class="actions">
+        <button>👍 Like</button>
+        <button>💬 Comment</button>
+        <button>↗ Share</button>
+    </div>
+
+</div>
+
+</body>
+</html>

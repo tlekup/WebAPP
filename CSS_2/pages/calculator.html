@@ -1,109 +1,152 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <style>
-            *{ 
-                margin:0;
-                padding:0;
-            }
-            .container{
-                width: 300px;
-                height: 500px;
-                margin: auto;
-                margin-Top : 100px;
-            }
-            .calculator{
-                width: 100%;
-                height: 100%;
-                background-color: aqua;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                border-radius: 10px;    
-                border : 2px solid #868585;
-            }
-            .monitor{
-                width: 80%;
-                height: 15%;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-                justify-content: center;
-                background-color: white;
-                margin-top: 15px;
-                border-radius: 10px;
-            }
-            .monitor text{
-                align-self: end;
-                font-size: 40px;
-                color: black;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator UI</title>
 
-            }
-            .cbl{
-                width: 70%;
-                height: 85%;
-                display: flex;
-                flex-direction: column;
-                flex-wrap: wrap;
-            }
-            .cbr{
-                width: 30%;
-                height: 85%;
-                display: flex;
-                flex-direction: column;
-                flex-wrap: wrap;
-            }
-            .row{
-                width: 100%;
-                display: flex;
-                justify-content: space-between;
-                margin: 10px 0px 10px 0px;
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
 
-            }
-            .row button{
-                width:  50px;
-                height: 50px;
-                border-radius: 10px;
-                color: rgb(0, 0, 0);
-                background-color:#ffffff;
-            }
-        </style>
+body{
+    background:#e6e6e6;
+}
 
-    </head>
-    <body>
-        <div class="container">
-            <div class="calculator">
-                <div class="monitor">
-                    <text>67</text>
+.container{
+    width:320px;
+    margin:60px auto;
+}
+
+.calculator{
+    background:#4cc9f0;
+    border:2px solid #777;
+    border-radius:15px;
+    padding:20px;
+}
+
+.monitor{
+    height:80px;
+    background:white;
+    border-radius:10px;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    padding:15px;
+    font-size:40px;
+    margin-bottom:20px;
+}
+
+.buttons{
+    display:flex;
+    gap:15px;
+}
+
+/* ฝั่งซ้าย */
+.left{
+    flex:3;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:12px;
+}
+
+.row button{
+    width:60px;
+    height:60px;
+}
+
+/* ฝั่งขวา */
+.right{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.right button{
+    width:100%;
+    height:60px;
+}
+
+/* ปุ่ม */
+button{
+    border:none;
+    border-radius:10px;
+    background:white;
+    font-size:22px;
+    cursor:pointer;
+    box-shadow:0 2px 5px rgba(0,0,0,.2);
+}
+
+button:hover{
+    background:#f2f2f2;
+}
+
+.equal{
+    flex:1;
+    background:#ffb703;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="calculator">
+
+        <div class="monitor">67</div>
+
+        <div class="buttons">
+
+            <div class="left">
+
+                <div class="row">
+                    <button>7</button>
+                    <button>8</button>
+                    <button>9</button>
                 </div>
-                <div class="cbl">
-                    <div class="row">
-                        <button>7</button>
-                        <button>8</button>
-                        <button>9</button>
-                    </div>
-                    <div class="row">
-                        <button>4</button>
-                        <button>5</button>
-                        <button>6</button>
-                    </div>
-                    <div class="row">
-                        <button>1</button>
-                        <button>2</button>
-                        <button>3</button>
-                    </div>
+
+                <div class="row">
+                    <button>4</button>
+                    <button>5</button>
+                    <button>6</button>
                 </div>
-                <div class="cbr">
-                    <div class="row">
-                        <button>7</button>
-                        <button>8</button>
-                        <button>9</button>
-                    </div>
+
+                <div class="row">
+                    <button>1</button>
+                    <button>2</button>
+                    <button>3</button>
                 </div>
+
+                <div class="row">
+                    <button>.</button>
+                    <button>0</button>
+                    <button>C</button>
+                </div>
+
             </div>
+
+            <div class="right">
+                <button>+</button>
+                <button>-</button>
+                <button>×</button>
+                <button>÷</button>
+                <button class="equal">=</button>
+            </div>
+
         </div>
-    </body>
-    </html>
+
+    </div>
+
+</div>
+
+</body>
+</html>
