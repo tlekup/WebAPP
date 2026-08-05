@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAB 5</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .container{
+            width: 100%;
+            height : 100vh;
+            display : flex;
+            flex-direction : column;
+            margin : auto;
+            align-items: center;
+            margin : 20px;
+        }
+        .row{
+            width: 100%;
+            display : flex;
+            justify-content : center;
+            flex-direction: row;
+            margin : 10px;
+            gap : 20px;
+        }
+        button{
+            width :  100px;
+            height : 40px;
+        }
+        
+        </style>
+</head>
+<body> 
+    <div class="container">
+        <button id="mybutton" onclick="changecolor()"> change </button>
+        <text>-----------------------</text>
+        <div class="row">
+            <input type="text" id="inptext">
+            <input type="color" id="inpcolorPicker" onchange="colorpicker()">
+            <button id="btncolorpicker" onclick="colorpicker()"> select </button>
+            
+        </div>
+            <p id="result"></p>
+            <text>-----------------------</text>
+        <div class="row">
+            <button id="btnup" onclick="up()">up</button>
+            <button id="btndown" onclick="down()">down</button>
+        </div>
+        <p id="result2">0</p>
+        <text>-----------------------</text>
+        <div class="row">
+            <text>Message:</text>
+            <input type="text" id="newtext">
+            <button id="addtext" onclick="addtext()">add</button>
+        </div>
+            <p id="result3"></p>
+            <text>-----------------------</text>
+        <div class="row">
+            <button id="btnprev" onclick="changetext(-1)">prev</button>
+            <p id="result4">---</p>
+            <button id="btnnext" onclick="changetext(1)">next</button>
+        </div>
+        <text>-----------------------</text>
+        <p id="result5"></p>
+        <text>-----------------------</text>
+    </div>
+        <script>
+            function changecolor(){
+                const btn = document.getElementById("mybutton");
+                if(btn.style.backgroundColor === "red") {
+                    btn.style.backgroundColor = "blue";
+                    btn.style.color = "white";
+                    btn.textContent = "Go Red";
+                  
+                } else {
+                    btn.style.backgroundColor = "red";
+                    btn.style.color = "black";
+                    btn.textContent = "Blue";
+                }
+            }  
+            function colorpicker(){
+                const inptext = document.getElementById("inptext");
+                const inp = document.getElementById("inpcolorPicker");
+                const result = document.getElementById("result");
+                
+                result.style.color = inp.value;
+                result.textContent = inptext.value;
+    
+            }
+            function up(){
+                let count = document.getElementById("result2");
+                count.textContent++;
+                
+            }
+            function down(){
+                let count = document.getElementById("result2");
+                count.textContent--;
+                
+            }
+            let data = [];
+            let index = 0;
+
+            function addtext(){
+                const newtext = document.getElementById("newtext");
+                const result = document.getElementById("result3");
+                result.innerHTML += newtext.value + "<br>";
+                data.push(newtext.value);
+            }
+            function changetext(num){
+                const result = document.getElementById("result4");
+                index += num;
+                if(index < 0)
+                    index = data.length - 1;
+                else if(index > data.length - 1)
+                    index = 0;
+                result.textContent = data[index];
+            }
+            const myObj = {
+                name: "John",
+                age: 30,
+                cars: [ {name:"Ford", models:["Fiesta", "Focus", "Mustang"]},
+                        {name:"BMW", models:["320", "X3", "X5"]},
+                        {name:"Fiat", models:["500", "Panda"]}
+                ]
+            }
+            let output = "";
+
+            output += `<h3>Owner : ${myObj.name} (${myObj.age})</h3>`;
+
+            for (let i = 0; i < myObj.cars.length; i++) {
+
+                output += `<ul>`;
+                output += `<li>${myObj.cars[i].name}</li>`;
+
+                output += `<ol style = "margin-left: 30px;">`;
+
+                for (let j = 0; j < myObj.cars[i].models.length; j++) {
+                    output += `<li>${myObj.cars[i].models[j]}</li>`;
+                }
+
+                output += `</ol>`;
+                output += `</ul>`;
+            }
+
+            document.getElementById("result5").innerHTML = output;
+        </script>
+</body>
+</html>
