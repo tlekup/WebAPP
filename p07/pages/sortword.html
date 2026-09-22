@@ -21,7 +21,6 @@
 
 
         body {
-
             margin: 0;
 
             font-family:
@@ -32,7 +31,6 @@
             background: white;
 
             color: #111;
-
         }
 
 
@@ -41,7 +39,6 @@
             width: 400px;
 
             margin: 30px auto;
-
         }
 
 
@@ -52,7 +49,6 @@
             font-size: 30px;
 
             margin-bottom: 20px;
-
         }
 
 
@@ -63,7 +59,6 @@
             line-height: 1.4;
 
             margin-bottom: 10px;
-
         }
 
 
@@ -72,7 +67,6 @@
             font-size: 18px;
 
             margin: 8px 0;
-
         }
 
 
@@ -83,13 +77,12 @@
             font-weight: bold;
 
             margin: 10px 0;
-
         }
 
 
-        /*
-            ช่องคำตอบ
-        */
+        /* =========================
+           ช่องคำตอบ
+        ========================= */
 
         .answer-area {
 
@@ -111,7 +104,6 @@
             gap: 5px;
 
             margin-bottom: 15px;
-
         }
 
 
@@ -141,9 +133,9 @@
         }
 
 
-        /*
-            ตัวอักษร
-        */
+        /* =========================
+           ตัวอักษร
+        ========================= */
 
         .letters {
 
@@ -156,7 +148,6 @@
             flex-wrap: wrap;
 
             margin-bottom: 15px;
-
         }
 
 
@@ -188,20 +179,18 @@
             cursor: grab;
 
             user-select: none;
-
         }
 
+
+        /* ตัวที่ถูกใช้ */
 
         .letter.used {
 
             opacity: 0.3;
 
+            cursor: default;
         }
 
-
-        /*
-            Message
-        */
 
         .message {
 
@@ -214,13 +203,8 @@
             font-weight: bold;
 
             margin: 10px;
-
         }
 
-
-        /*
-            คะแนน
-        */
 
         .score {
 
@@ -229,13 +213,8 @@
             font-size: 18px;
 
             margin-bottom: 10px;
-
         }
 
-
-        /*
-            Reset
-        */
 
         .reset {
 
@@ -254,20 +233,14 @@
             font-size: 24px;
 
             cursor: pointer;
-
         }
 
 
         .reset:hover {
 
             background: #68734e;
-
         }
 
-
-        /*
-            กลับหน้าคำศัพท์
-        */
 
         .back {
 
@@ -278,13 +251,11 @@
             margin-top: 15px;
 
             color: #555;
-
         }
 
     </style>
 
 </head>
-
 
 
 <body>
@@ -352,8 +323,7 @@
     <div
         class="answer-area"
         id="answerArea"
-    >
-    </div>
+    ></div>
 
 
     <!-- ตัวอักษร -->
@@ -361,15 +331,13 @@
     <div
         class="letters"
         id="letters"
-    >
-    </div>
+    ></div>
 
 
     <div
         class="message"
         id="message"
-    >
-    </div>
+    ></div>
 
 
     <div class="score">
@@ -387,9 +355,7 @@
         class="reset"
         onclick="resetGame()"
     >
-
         Reset
-
     </button>
 
 
@@ -397,9 +363,7 @@
         href="wordlist.html"
         class="back"
     >
-
         ← กลับไปจัดการคำศัพท์
-
     </a>
 
 
@@ -410,12 +374,9 @@
 <script>
 
 
-    /*
-        ==============================
-        ตัวแปรเกม
-        ==============================
-    */
-
+    /* ==============================
+       ตัวแปรเกม
+    ============================== */
 
     let currentWord = "";
 
@@ -431,11 +392,9 @@
 
 
 
-    /*
-        ==============================
-        ดึงคำศัพท์จาก wordlist.html
-        ==============================
-    */
+    /* ==============================
+       ดึงคำศัพท์
+    ============================== */
 
     function getWords() {
 
@@ -447,16 +406,13 @@
 
 
 
-    /*
-        ==============================
-        สุ่ม Array
-        ==============================
-    */
+    /* ==============================
+       สุ่ม Array
+    ============================== */
 
     function shuffle(array) {
 
-        const result =
-            [...array];
+        const result = [...array];
 
 
         for (
@@ -467,8 +423,7 @@
 
             const j =
                 Math.floor(
-                    Math.random() *
-                    (i + 1)
+                    Math.random() * (i + 1)
                 );
 
 
@@ -490,24 +445,17 @@
 
 
 
-    /*
-        ==============================
-        เริ่มคำถาม
-        ==============================
-    */
+    /* ==============================
+       เริ่มคำถาม
+    ============================== */
 
     function nextQuestion() {
 
         clearInterval(timer);
 
 
-        const words =
-            getWords();
+        const words = getWords();
 
-
-        /*
-            ถ้าไม่มีคำ
-        */
 
         if (words.length === 0) {
 
@@ -520,10 +468,6 @@
 
         }
 
-
-        /*
-            ครบ 5 ข้อ
-        */
 
         if (question >= maxQuestion) {
 
@@ -543,9 +487,7 @@
             question;
 
 
-        /*
-            สุ่มคำ
-        */
+        /* สุ่มคำศัพท์ */
 
         currentWord =
             words[
@@ -571,11 +513,9 @@
 
 
 
-    /*
-        ==============================
-        สร้างช่องคำตอบ
-        ==============================
-    */
+    /* ==============================
+       สร้างช่องคำตอบ
+    ============================== */
 
     function createAnswer() {
 
@@ -605,6 +545,13 @@
 
 
             /*
+                เก็บตำแหน่งของช่อง
+            */
+
+            slot.dataset.index = i;
+
+
+            /*
                 รับ Drag
             */
 
@@ -629,6 +576,11 @@
                     event.preventDefault();
 
 
+                    /*
+                        ถ้าช่องนี้มีตัวอักษรแล้ว
+                        ไม่ให้ใส่ซ้ำ
+                    */
+
                     if (
                         slot.textContent !== ""
                     ) {
@@ -638,31 +590,73 @@
                     }
 
 
-                    const char =
-                        event.dataTransfer
-                            .getData("text");
+                    /*
+                        รับ ID ของตัวอักษร
+                    */
 
+                    const letterId =
+                        event.dataTransfer
+                            .getData(
+                                "letterId"
+                            );
+
+
+                    /*
+                        หา "ตัวที่ลากจริงๆ"
+                        ด้วย ID
+                    */
 
                     const source =
                         document.querySelector(
-                            `[data-char="${char}"]`
+                            `[data-letter-id="${letterId}"]`
                         );
 
+
+                    if (!source) {
+                        return;
+                    }
+
+
+                    /*
+                        เอาตัวอักษรจากตัวที่ลาก
+                    */
+
+                    const char =
+                        source.dataset.char;
+
+
+                    /*
+                        ใส่ลงช่อง
+                    */
 
                     slot.textContent =
                         char.toUpperCase();
 
 
-                    if (source) {
+                    /*
+                        ทำให้เฉพาะตัวที่ลาก
+                        จางลง
+                    */
 
-                        source.classList.add(
-                            "used"
-                        );
+                    source.classList.add(
+                        "used"
+                    );
 
-                        source.draggable =
-                            false;
 
-                    }
+                    /*
+                        ปิดการลากตัวนั้น
+                    */
+
+                    source.draggable = false;
+
+
+                    /*
+                        เก็บ ID ไว้กับช่อง
+                        เผื่อใช้ภายหลัง
+                    */
+
+                    slot.dataset.letterId =
+                        letterId;
 
 
                     checkAnswer();
@@ -679,11 +673,9 @@
 
 
 
-    /*
-        ==============================
-        สร้างตัวอักษร
-        ==============================
-    */
+    /* ==============================
+       สร้างตัวอักษร
+    ============================== */
 
     function createLetters() {
 
@@ -696,6 +688,10 @@
         area.innerHTML = "";
 
 
+        /*
+            สุ่มตัวอักษร
+        */
+
         const chars =
             shuffle(
                 currentWord.split("")
@@ -704,6 +700,7 @@
 
         chars.forEach(
             function(char, index) {
+
 
                 const div =
                     document.createElement(
@@ -719,32 +716,46 @@
                     char.toUpperCase();
 
 
-                div.draggable =
-                    true;
+                /*
+                    เปิด Drag
+                */
+
+                div.draggable = true;
 
 
                 /*
-                    สำคัญ:
-                    ใช้ index เพื่อแยก
-                    ตัวอักษรที่ซ้ำกัน
+                    เก็บตัวอักษร
                 */
 
                 div.dataset.char =
                     char;
 
 
-                div.dataset.index =
-                    index;
+                /*
+                    สำคัญมาก
+                    แต่ละตัวมี ID ไม่ซ้ำกัน
+                */
 
+                div.dataset.letterId =
+                    "letter-" + index;
+
+
+                /*
+                    ตอนเริ่มลาก
+                */
 
                 div.addEventListener(
                     "dragstart",
                     function(event) {
 
+                        /*
+                            ส่ง ID ของตัวนี้
+                        */
+
                         event.dataTransfer
                             .setData(
-                                "text",
-                                char
+                                "letterId",
+                                div.dataset.letterId
                             );
 
                     }
@@ -760,11 +771,9 @@
 
 
 
-    /*
-        ==============================
-        ตรวจคำตอบ
-        ==============================
-    */
+    /* ==============================
+       ตรวจคำตอบ
+    ============================== */
 
     function checkAnswer() {
 
@@ -775,7 +784,7 @@
 
 
         /*
-            เช็กว่าใส่ครบหรือยัง
+            ยังใส่ไม่ครบ
         */
 
         for (const slot of slots) {
@@ -842,6 +851,7 @@
 
         }
 
+
         /*
             ผิด
         */
@@ -859,11 +869,9 @@
 
 
 
-    /*
-        ==============================
-        Timer
-        ==============================
-    */
+    /* ==============================
+       Timer
+    ============================== */
 
     function startTimer() {
 
@@ -915,11 +923,9 @@
 
 
 
-    /*
-        ==============================
-        จบเกม
-        ==============================
-    */
+    /* ==============================
+       จบเกม
+    ============================== */
 
     function endGame() {
 
@@ -948,11 +954,9 @@
 
 
 
-    /*
-        ==============================
-        Reset
-        ==============================
-    */
+    /* ==============================
+       Reset
+    ============================== */
 
     function resetGame() {
 
@@ -1005,14 +1009,11 @@
 
 
 
-    /*
-        ==============================
-        เริ่มเกม
-        ==============================
-    */
+    /* ==============================
+       เริ่มเกม
+    ============================== */
 
     nextQuestion();
-
 
 </script>
 
