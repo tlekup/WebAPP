@@ -1,54 +1,119 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <title>My Projects</title>
+
     <style>
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f2f2f2;
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            padding: 50px 20px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .projects {
+            width: 100%;
+            max-width: 1200px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .project {
+            background: white;
+            padding: 30px;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .project h2 {
+            margin-bottom: 15px;
+        }
+
+        .project p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .project a {
+            display: inline-block;
+
+            padding: 10px 25px;
+
+            background: #333;
+            color: white;
+
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .project a:hover {
+            background: #555;
+        }
+
+        @media (max-width: 600px) {
+            .projects {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
-<body>  
-    <div>
-        <div class="monitor" id="count">5</div>
-        <button id="stop">click me</button>
+<body>
+
+    <div class="container">
+
+        <h1>My Projects</h1>
+
+        <div class="projects">
+
+            <div class="project">
+                <h2>Match</h2>
+                <a href="pages/match.html">View more Detail</a>
+            </div>
+
+            <div class="project">
+                <h2>vote</h2>
+                <a href="pages/vote.html">View more Detail</a>
+            </div>
+
+            <div class="project">
+                <h2>sort</h2>
+                <a href="pages/wordlist.html">View more Detail</a>
+            </div>
+        </div>
+
     </div>
 
-    <script>
-        let countNumber = Number(document.getElementById("count").textContent);
-        let textCount = document.getElementById("count");
-        /*---countNumber = Number(textCount.textContent)--*/
-        let btnStop = document.getElementById("stop");
-        
-        let mytime;
-        let count = 0;
-        let myinterval;
-
-        btnStop.addEventListener("click", () => {
-            count++;
-
-            if (count % 2 === 1) {
-                myinterval = setInterval(countDown, 1000)
-            } else {
-                StopBomb();
-            }
-            });
-
-        function countDown(){
-                if(countNumber>0){
-                    countNumber--;
-                    textCount.textContent = countNumber;
-                    // mytime = setTimeout(countDown,1000)
-                }else{
-                    textCount.textContent = "you bombed";
-                }
-
-            }
-        function StopBomb(){
-                clearTimeout(myinterval);
-                textCount.textContent = "you safed";
-        }
-    </script>
 </body>
 </html>
+
