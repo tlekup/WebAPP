@@ -65,8 +65,7 @@
             box-shadow:
                 0 3px 8px rgba(0, 0, 0, 0.25);
 
-            border-radius:
-                0 0 6px 6px;
+            border-radius: 0 0 6px 6px;
 
             overflow: hidden;
         }
@@ -80,8 +79,7 @@
             align-items: center;
             justify-content: space-between;
 
-            border-bottom:
-                2px dotted #bbb;
+            border-bottom: 2px dotted #bbb;
 
             font-size: 14px;
         }
@@ -92,26 +90,6 @@
 
         .todo-text {
             cursor: pointer;
-        }
-
-        .todo-item.completed .todo-text {
-            text-decoration: line-through;
-            color: #888;
-        }
-
-        .todo-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .check-box {
-            width: 14px;
-            height: 14px;
-
-            cursor: pointer;
-
-            accent-color: green;
         }
 
         .delete-btn {
@@ -183,9 +161,7 @@
             placeholder="Enter your word"
         >
 
-
-        <ul class="todo-list">
-        </ul>
+        <ul class="todo-list"></ul>
 
     </div>
 
@@ -210,9 +186,7 @@
         document.querySelector(".todo-list");
 
 
-    /*
-        อ่านคำศัพท์จาก localStorage
-    */
+    // อ่านคำศัพท์จาก localStorage
 
     let words =
         JSON.parse(
@@ -220,48 +194,31 @@
         ) || [];
 
 
-    /*
-        แสดงคำศัพท์
-    */
+    // แสดงคำศัพท์
 
     function renderWords() {
 
         list.innerHTML = "";
-
 
         words.forEach(function(word, index) {
 
             const li =
                 document.createElement("li");
 
-            li.className =
-                "todo-item";
-
+            li.className = "todo-item";
 
             li.innerHTML = `
-
                 <span class="todo-text">
                     ${escapeHTML(word)}
                 </span>
 
-                <div class="todo-actions">
-
-                    <input
-                        type="checkbox"
-                        class="check-box"
-                    >
-
-                    <button
-                        class="delete-btn"
-                        data-index="${index}"
-                    >
-                        🗑
-                    </button>
-
-                </div>
-
+                <button
+                    class="delete-btn"
+                    data-index="${index}"
+                >
+                    🗑
+                </button>
             `;
-
 
             list.appendChild(li);
 
@@ -270,9 +227,7 @@
     }
 
 
-    /*
-        เพิ่มคำศัพท์
-    */
+    // เพิ่มคำศัพท์
 
     function addWord() {
 
@@ -285,9 +240,7 @@
         }
 
 
-        /*
-            ป้องกันคำซ้ำ
-        */
+        // ป้องกันคำซ้ำ
 
         if (words.includes(word)) {
 
@@ -298,7 +251,6 @@
 
 
         words.push(word);
-
 
         saveWords();
 
@@ -312,27 +264,21 @@
     }
 
 
-    /*
-        กด Enter เพื่อเพิ่ม
-    */
+    // กด Enter เพื่อเพิ่มคำศัพท์
 
     input.addEventListener(
         "keydown",
         function(event) {
 
             if (event.key === "Enter") {
-
                 addWord();
-
             }
 
         }
     );
 
 
-    /*
-        ลบคำศัพท์
-    */
+    // ลบคำศัพท์
 
     list.addEventListener(
         "click",
@@ -346,9 +292,7 @@
                 const index =
                     event.target.dataset.index;
 
-
                 words.splice(index, 1);
-
 
                 saveWords();
 
@@ -360,39 +304,7 @@
     );
 
 
-    /*
-        Checkbox
-    */
-
-    list.addEventListener(
-        "change",
-        function(event) {
-
-            if (
-                event.target.classList
-                    .contains("check-box")
-            ) {
-
-                const item =
-                    event.target.closest(
-                        ".todo-item"
-                    );
-
-
-                item.classList.toggle(
-                    "completed",
-                    event.target.checked
-                );
-
-            }
-
-        }
-    );
-
-
-    /*
-        บันทึกข้อมูล
-    */
+    // บันทึกคำศัพท์
 
     function saveWords() {
 
@@ -404,9 +316,7 @@
     }
 
 
-    /*
-        ป้องกัน HTML
-    */
+    // ป้องกัน HTML Injection
 
     function escapeHTML(text) {
 
@@ -420,9 +330,7 @@
     }
 
 
-    /*
-        แสดงข้อมูลตอนเปิดหน้า
-    */
+    // แสดงคำศัพท์เมื่อเปิดหน้า
 
     renderWords();
 
