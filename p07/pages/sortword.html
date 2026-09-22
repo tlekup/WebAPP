@@ -777,95 +777,78 @@
 
     function checkAnswer() {
 
-        const slots =
-            document.querySelectorAll(
-                ".answer-slot"
-            );
+    const slots =
+        document.querySelectorAll(".answer-slot");
 
 
-        /*
-            ยังใส่ไม่ครบ
-        */
+    // ยังใส่ตัวอักษรไม่ครบ
+    for (const slot of slots) {
 
-        for (const slot of slots) {
-
-            if (
-                slot.textContent === ""
-            ) {
-
-                return;
-
-            }
-
-        }
-
-
-        /*
-            สร้างคำตอบ
-        */
-
-        let answer = "";
-
-
-        slots.forEach(
-            function(slot) {
-
-                answer +=
-                    slot.textContent
-                        .toLowerCase();
-
-            }
-        );
-
-
-        /*
-            ถูก
-        */
-
-        if (
-            answer === currentWord
-        ) {
-
-            score++;
-
-
-            document.getElementById(
-                "score"
-            ).textContent =
-                score;
-
-
-            document.getElementById(
-                "message"
-            ).textContent =
-                "ถูกต้อง!";
-
-
-            clearInterval(timer);
-
-
-            setTimeout(
-                nextQuestion,
-                800
-            );
-
-        }
-
-
-        /*
-            ผิด
-        */
-
-        else {
-
-            document.getElementById(
-                "message"
-            ).textContent =
-                "ผิด! ลองใหม่";
-
+        if (slot.textContent === "") {
+            return;
         }
 
     }
+
+
+    // สร้างคำตอบ
+    let answer = "";
+
+    slots.forEach(function(slot) {
+
+        answer +=
+            slot.textContent.toLowerCase();
+
+    });
+
+
+    // =========================
+    // ตอบถูก
+    // =========================
+
+    if (answer === currentWord) {
+
+        score++;
+
+        document.getElementById("score")
+            .textContent = score;
+
+        document.getElementById("message")
+            .textContent = "ถูกต้อง!";
+
+        clearInterval(timer);
+
+        setTimeout(function() {
+
+            nextQuestion();
+
+        }, 800);
+
+    }
+
+
+    // =========================
+    // ตอบผิด
+    // =========================
+
+    else {
+
+        // ไม่เพิ่มคะแนน
+        document.getElementById("message")
+            .textContent = "ผิด!";
+
+        clearInterval(timer);
+
+        // ไปข้อถัดไปทันที
+        setTimeout(function() {
+
+            nextQuestion();
+
+        }, 500);
+
+    }
+
+}
 
 
 
