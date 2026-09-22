@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Word List</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: white;
+            color: #111;
+        }
+
+        .page {
+            width: 400px;
+            margin: 50px auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
+
+        .todo-wrapper {
+            width: 290px;
+            margin: auto;
+            background: #9cff00;
+            padding: 12px;
+        }
+
+        .todo-input {
+            width: 100%;
+            height: 40px;
+            padding: 0 12px;
+
+            border: 1px solid #5b9bd5;
+            border-radius: 6px 6px 0 0;
+
+            outline: none;
+            font-size: 14px;
+        }
+
+        .todo-input:focus {
+            border-color: #278bd0;
+        }
+
+        .todo-list {
+            margin: 0;
+            padding: 0;
+
+            list-style: none;
+
+            background: #ffff00;
+
+            box-shadow:
+                0 3px 8px rgba(0, 0, 0, 0.25);
+
+            border-radius:
+                0 0 6px 6px;
+
+            overflow: hidden;
+        }
+
+        .todo-item {
+            min-height: 45px;
+
+            padding: 0 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom:
+                2px dotted #bbb;
+
+            font-size: 14px;
+        }
+
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+
+        .todo-text {
+            cursor: pointer;
+        }
+
+        .todo-item.completed .todo-text {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .todo-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .check-box {
+            width: 14px;
+            height: 14px;
+
+            cursor: pointer;
+
+            accent-color: green;
+        }
+
+        .delete-btn {
+            border: none;
+            background: transparent;
+
+            cursor: pointer;
+
+            padding: 0;
+
+            color: red;
+
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .delete-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .game-link {
+            display: block;
+
+            width: 290px;
+
+            margin: 25px auto;
+
+            padding: 10px;
+
+            text-align: center;
+
+            background: #858f68;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 5px;
+
+            font-size: 20px;
+        }
+
+        .game-link:hover {
+            background: #68734e;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+    <h1>
+        <span style="background:#cbd6b2;">
+            คำศัพท์
+        </span>
+    </h1>
+
+
+    <div class="todo-wrapper">
+
+        <input
+            type="text"
+            class="todo-input"
+            placeholder="Enter your word"
+        >
+
+
+        <ul class="todo-list">
+        </ul>
+
+    </div>
+
+
+    <a
+        href="sortword.html"
+        class="game-link"
+    >
+        ไปเกมเรียงคำศัพท์
+    </a>
+
+</div>
+
+
+
+<script>
+
+    const input =
+        document.querySelector(".todo-input");
+
+    const list =
+        document.querySelector(".todo-list");
+
+
+    /*
+        อ่านคำศัพท์จาก localStorage
+    */
+
+    let words =
+        JSON.parse(
+            localStorage.getItem("words")
+        ) || [];
+
+
+    /*
+        แสดงคำศัพท์
+    */
+
+    function renderWords() {
+
+        list.innerHTML = "";
+
+
+        words.forEach(function(word, index) {
+
+            const li =
+                document.createElement("li");
+
+            li.className =
+                "todo-item";
+
+
+            li.innerHTML = `
+
+                <span class="todo-text">
+                    ${escapeHTML(word)}
+                </span>
+
+                <div class="todo-actions">
+
+                    <input
+                        type="checkbox"
+                        class="check-box"
+                    >
+
+                    <button
+                        class="delete-btn"
+                        data-index="${index}"
+                    >
+                        🗑
+                    </button>
+
+                </div>
+
+            `;
+
+
+            list.appendChild(li);
+
+        });
+
+    }
+
+
+    /*
+        เพิ่มคำศัพท์
+    */
+
+    function addWord() {
+
+        const word =
+            input.value.trim().toLowerCase();
+
+
+        if (word === "") {
+            return;
+        }
+
+
+        /*
+            ป้องกันคำซ้ำ
+        */
+
+        if (words.includes(word)) {
+
+            alert("มีคำนี้อยู่แล้ว");
+
+            return;
+        }
+
+
+        words.push(word);
+
+
+        saveWords();
+
+        renderWords();
+
+
+        input.value = "";
+
+        input.focus();
+
+    }
+
+
+    /*
+        กด Enter เพื่อเพิ่ม
+    */
+
+    input.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                addWord();
+
+            }
+
+        }
+    );
+
+
+    /*
+        ลบคำศัพท์
+    */
+
+    list.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target.classList
+                    .contains("delete-btn")
+            ) {
+
+                const index =
+                    event.target.dataset.index;
+
+
+                words.splice(index, 1);
+
+
+                saveWords();
+
+                renderWords();
+
+            }
+
+        }
+    );
+
+
+    /*
+        Checkbox
+    */
+
+    list.addEventListener(
+        "change",
+        function(event) {
+
+            if (
+                event.target.classList
+                    .contains("check-box")
+            ) {
+
+                const item =
+                    event.target.closest(
+                        ".todo-item"
+                    );
+
+
+                item.classList.toggle(
+                    "completed",
+                    event.target.checked
+                );
+
+            }
+
+        }
+    );
+
+
+    /*
+        บันทึกข้อมูล
+    */
+
+    function saveWords() {
+
+        localStorage.setItem(
+            "words",
+            JSON.stringify(words)
+        );
+
+    }
+
+
+    /*
+        ป้องกัน HTML
+    */
+
+    function escapeHTML(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent = text;
+
+        return div.innerHTML;
+
+    }
+
+
+    /*
+        แสดงข้อมูลตอนเปิดหน้า
+    */
+
+    renderWords();
+
+</script>
+
+
+</body>
+
+</html>

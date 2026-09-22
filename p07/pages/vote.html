@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote</title>
+    <style>
+        *{
+            margin : 0;
+            padding : 0;
+        }
+        .container{
+            width: 100%;
+            min-height: 100vh;
+            display : flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: rgb(0, 217, 255);
+        }
+        .container h1{
+            font-size: 40px;
+            font-weight: bold;
+        }
+        .row{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            margin : 20px;
+            gap : 30px;
+
+        }
+        .row button{
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
+            border : 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        button {
+            width: 200px; 
+            height: 50px; 
+            font-size: 20px;
+            border-radius : 20px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+            <h1> Vote the favorite </h1>
+        <div class="row">
+            <button style="background-image: url(/p07/image/001.jpg);" id="one"></button>
+            <button style="background-image: url(/p07/image/002.jpg);"id="two"></button>
+            <button style="background-image: url(/p07/image/003.jpg);"id="three"></button>
+        </div>
+        <a href="showvoted.html">
+        <button>Show Vote</button>
+        </a>
+    </div>
+    <script>
+        let vote1 = Number(localStorage.getItem("vote1")) || 0;
+        let vote2 = Number(localStorage.getItem("vote2")) || 0;
+        let vote3 = Number(localStorage.getItem("vote3")) || 0;
+
+        document.getElementById("one").addEventListener("click", () => {
+            vote1++;
+            localStorage.setItem("vote1", vote1);
+        });
+
+        document.getElementById("two").addEventListener("click", () => {
+            vote2++;
+            localStorage.setItem("vote2", vote2);
+        });
+
+        document.getElementById("three").addEventListener("click", () => {
+            vote3++;
+            localStorage.setItem("vote3", vote3);
+        });
+    </script>
+</body>
+</html>

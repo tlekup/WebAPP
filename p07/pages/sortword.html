@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sort Word Game</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: white;
+
+            color: #111;
+
+        }
+
+
+        .game {
+
+            width: 400px;
+
+            margin: 30px auto;
+
+        }
+
+
+        h1 {
+
+            text-align: center;
+
+            font-size: 30px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .description {
+
+            font-size: 18px;
+
+            line-height: 1.4;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .info {
+
+            font-size: 18px;
+
+            margin: 8px 0;
+
+        }
+
+
+        .timer {
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            margin: 10px 0;
+
+        }
+
+
+        /*
+            ช่องคำตอบ
+        */
+
+        .answer-area {
+
+            min-height: 65px;
+
+            border:
+                2px dashed #5b9bd5;
+
+            border-radius: 8px;
+
+            padding: 5px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 5px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .answer-slot {
+
+            width: 55px;
+
+            height: 55px;
+
+            border:
+                2px solid #999;
+
+            border-radius: 7px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            background: white;
+
+        }
+
+
+        /*
+            ตัวอักษร
+        */
+
+        .letters {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 30px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .letter {
+
+            width: 65px;
+
+            height: 50px;
+
+            background: #4aa8c7;
+
+            border:
+                1px solid #328ba7;
+
+            border-radius: 7px;
+
+            color: white;
+
+            font-size: 30px;
+
+            font-weight: bold;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            cursor: grab;
+
+            user-select: none;
+
+        }
+
+
+        .letter.used {
+
+            opacity: 0.3;
+
+        }
+
+
+        /*
+            Message
+        */
+
+        .message {
+
+            min-height: 30px;
+
+            text-align: center;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            margin: 10px;
+
+        }
+
+
+        /*
+            คะแนน
+        */
+
+        .score {
+
+            text-align: center;
+
+            font-size: 18px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        /*
+            Reset
+        */
+
+        .reset {
+
+            width: 100%;
+
+            height: 38px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            background: #858f68;
+
+            color: white;
+
+            font-size: 24px;
+
+            cursor: pointer;
+
+        }
+
+
+        .reset:hover {
+
+            background: #68734e;
+
+        }
+
+
+        /*
+            กลับหน้าคำศัพท์
+        */
+
+        .back {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 15px;
+
+            color: #555;
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+
+<div class="game">
+
+
+    <h1>
+
+        <span style="background:#cbd6b2;">
+
+            เกมเรียงคำศัพท์
+
+        </span>
+
+    </h1>
+
+
+    <div class="description">
+
+        สุ่มคำศัพท์จากรายการคำศัพท์<br>
+
+        สุ่มสลับตำแหน่งตัวอักษรในคำศัพท์<br>
+
+        ลากตัวอักษรไปวางตามตำแหน่ง<br>
+
+        ตรวจสอบเมื่อวางครบทุกตัวแล้ว<br>
+
+        มีการจับเวลา กำหนด timeout<br>
+
+        ทายครบ 5 คำสรุปคะแนน
+
+    </div>
+
+
+    <div class="info">
+
+        ข้อที่:
+
+        <span id="question">
+            1
+        </span>
+
+        / 5
+
+    </div>
+
+
+    <div class="timer">
+
+        เวลา:
+
+        <span id="time">
+            10
+        </span>
+
+        วินาที
+
+    </div>
+
+
+    <!-- ช่องคำตอบ -->
+
+    <div
+        class="answer-area"
+        id="answerArea"
+    >
+    </div>
+
+
+    <!-- ตัวอักษร -->
+
+    <div
+        class="letters"
+        id="letters"
+    >
+    </div>
+
+
+    <div
+        class="message"
+        id="message"
+    >
+    </div>
+
+
+    <div class="score">
+
+        คะแนน:
+
+        <span id="score">
+            0
+        </span>
+
+    </div>
+
+
+    <button
+        class="reset"
+        onclick="resetGame()"
+    >
+
+        Reset
+
+    </button>
+
+
+    <a
+        href="wordlist.html"
+        class="back"
+    >
+
+        ← กลับไปจัดการคำศัพท์
+
+    </a>
+
+
+</div>
+
+
+
+<script>
+
+
+    /*
+        ==============================
+        ตัวแปรเกม
+        ==============================
+    */
+
+
+    let currentWord = "";
+
+    let question = 0;
+
+    let score = 0;
+
+    let time = 10;
+
+    let timer = null;
+
+    const maxQuestion = 5;
+
+
+
+    /*
+        ==============================
+        ดึงคำศัพท์จาก wordlist.html
+        ==============================
+    */
+
+    function getWords() {
+
+        return JSON.parse(
+            localStorage.getItem("words")
+        ) || [];
+
+    }
+
+
+
+    /*
+        ==============================
+        สุ่ม Array
+        ==============================
+    */
+
+    function shuffle(array) {
+
+        const result =
+            [...array];
+
+
+        for (
+            let i = result.length - 1;
+            i > 0;
+            i--
+        ) {
+
+            const j =
+                Math.floor(
+                    Math.random() *
+                    (i + 1)
+                );
+
+
+            [
+                result[i],
+                result[j]
+            ] =
+            [
+                result[j],
+                result[i]
+            ];
+
+        }
+
+
+        return result;
+
+    }
+
+
+
+    /*
+        ==============================
+        เริ่มคำถาม
+        ==============================
+    */
+
+    function nextQuestion() {
+
+        clearInterval(timer);
+
+
+        const words =
+            getWords();
+
+
+        /*
+            ถ้าไม่มีคำ
+        */
+
+        if (words.length === 0) {
+
+            document.getElementById(
+                "message"
+            ).textContent =
+                "กรุณาเพิ่มคำศัพท์ก่อน";
+
+            return;
+
+        }
+
+
+        /*
+            ครบ 5 ข้อ
+        */
+
+        if (question >= maxQuestion) {
+
+            endGame();
+
+            return;
+
+        }
+
+
+        question++;
+
+
+        document.getElementById(
+            "question"
+        ).textContent =
+            question;
+
+
+        /*
+            สุ่มคำ
+        */
+
+        currentWord =
+            words[
+                Math.floor(
+                    Math.random() *
+                    words.length
+                )
+            ];
+
+
+        createAnswer();
+
+        createLetters();
+
+        startTimer();
+
+
+        document.getElementById(
+            "message"
+        ).textContent = "";
+
+    }
+
+
+
+    /*
+        ==============================
+        สร้างช่องคำตอบ
+        ==============================
+    */
+
+    function createAnswer() {
+
+        const area =
+            document.getElementById(
+                "answerArea"
+            );
+
+
+        area.innerHTML = "";
+
+
+        for (
+            let i = 0;
+            i < currentWord.length;
+            i++
+        ) {
+
+            const slot =
+                document.createElement(
+                    "div"
+                );
+
+
+            slot.className =
+                "answer-slot";
+
+
+            /*
+                รับ Drag
+            */
+
+            slot.addEventListener(
+                "dragover",
+                function(event) {
+
+                    event.preventDefault();
+
+                }
+            );
+
+
+            /*
+                Drop
+            */
+
+            slot.addEventListener(
+                "drop",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    if (
+                        slot.textContent !== ""
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const char =
+                        event.dataTransfer
+                            .getData("text");
+
+
+                    const source =
+                        document.querySelector(
+                            `[data-char="${char}"]`
+                        );
+
+
+                    slot.textContent =
+                        char.toUpperCase();
+
+
+                    if (source) {
+
+                        source.classList.add(
+                            "used"
+                        );
+
+                        source.draggable =
+                            false;
+
+                    }
+
+
+                    checkAnswer();
+
+                }
+            );
+
+
+            area.appendChild(slot);
+
+        }
+
+    }
+
+
+
+    /*
+        ==============================
+        สร้างตัวอักษร
+        ==============================
+    */
+
+    function createLetters() {
+
+        const area =
+            document.getElementById(
+                "letters"
+            );
+
+
+        area.innerHTML = "";
+
+
+        const chars =
+            shuffle(
+                currentWord.split("")
+            );
+
+
+        chars.forEach(
+            function(char, index) {
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "letter";
+
+
+                div.textContent =
+                    char.toUpperCase();
+
+
+                div.draggable =
+                    true;
+
+
+                /*
+                    สำคัญ:
+                    ใช้ index เพื่อแยก
+                    ตัวอักษรที่ซ้ำกัน
+                */
+
+                div.dataset.char =
+                    char;
+
+
+                div.dataset.index =
+                    index;
+
+
+                div.addEventListener(
+                    "dragstart",
+                    function(event) {
+
+                        event.dataTransfer
+                            .setData(
+                                "text",
+                                char
+                            );
+
+                    }
+                );
+
+
+                area.appendChild(div);
+
+            }
+        );
+
+    }
+
+
+
+    /*
+        ==============================
+        ตรวจคำตอบ
+        ==============================
+    */
+
+    function checkAnswer() {
+
+        const slots =
+            document.querySelectorAll(
+                ".answer-slot"
+            );
+
+
+        /*
+            เช็กว่าใส่ครบหรือยัง
+        */
+
+        for (const slot of slots) {
+
+            if (
+                slot.textContent === ""
+            ) {
+
+                return;
+
+            }
+
+        }
+
+
+        /*
+            สร้างคำตอบ
+        */
+
+        let answer = "";
+
+
+        slots.forEach(
+            function(slot) {
+
+                answer +=
+                    slot.textContent
+                        .toLowerCase();
+
+            }
+        );
+
+
+        /*
+            ถูก
+        */
+
+        if (
+            answer === currentWord
+        ) {
+
+            score++;
+
+
+            document.getElementById(
+                "score"
+            ).textContent =
+                score;
+
+
+            document.getElementById(
+                "message"
+            ).textContent =
+                "ถูกต้อง!";
+
+
+            clearInterval(timer);
+
+
+            setTimeout(
+                nextQuestion,
+                800
+            );
+
+        }
+
+        /*
+            ผิด
+        */
+
+        else {
+
+            document.getElementById(
+                "message"
+            ).textContent =
+                "ผิด! ลองใหม่";
+
+        }
+
+    }
+
+
+
+    /*
+        ==============================
+        Timer
+        ==============================
+    */
+
+    function startTimer() {
+
+        time = 10;
+
+
+        document.getElementById(
+            "time"
+        ).textContent =
+            time;
+
+
+        timer =
+            setInterval(
+                function() {
+
+                    time--;
+
+
+                    document.getElementById(
+                        "time"
+                    ).textContent =
+                        time;
+
+
+                    if (time <= 0) {
+
+                        clearInterval(timer);
+
+
+                        document.getElementById(
+                            "message"
+                        ).textContent =
+                            "หมดเวลา!";
+
+
+                        setTimeout(
+                            nextQuestion,
+                            1000
+                        );
+
+                    }
+
+                },
+                1000
+            );
+
+    }
+
+
+
+    /*
+        ==============================
+        จบเกม
+        ==============================
+    */
+
+    function endGame() {
+
+        clearInterval(timer);
+
+
+        document.getElementById(
+            "message"
+        ).textContent =
+            "จบเกม! คะแนน " +
+            score +
+            " / " +
+            maxQuestion;
+
+
+        document.getElementById(
+            "letters"
+        ).innerHTML = "";
+
+
+        document.getElementById(
+            "answerArea"
+        ).innerHTML = "";
+
+    }
+
+
+
+    /*
+        ==============================
+        Reset
+        ==============================
+    */
+
+    function resetGame() {
+
+        clearInterval(timer);
+
+
+        question = 0;
+
+        score = 0;
+
+        time = 10;
+
+
+        document.getElementById(
+            "question"
+        ).textContent =
+            "1";
+
+
+        document.getElementById(
+            "score"
+        ).textContent =
+            "0";
+
+
+        document.getElementById(
+            "time"
+        ).textContent =
+            "10";
+
+
+        document.getElementById(
+            "message"
+        ).textContent = "";
+
+
+        document.getElementById(
+            "answerArea"
+        ).innerHTML = "";
+
+
+        document.getElementById(
+            "letters"
+        ).innerHTML = "";
+
+
+        nextQuestion();
+
+    }
+
+
+
+    /*
+        ==============================
+        เริ่มเกม
+        ==============================
+    */
+
+    nextQuestion();
+
+
+</script>
+
+
+</body>
+
+</html>

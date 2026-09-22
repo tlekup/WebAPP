@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        *{
+            margin : 0;
+            padding : 0;
+        }
+        .container{
+            display: flex;
+            flex-direction:column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width:100%;
+        }
+        button{
+            padding : 20px;
+            font-size : 10px;
+            margin : 20px;
+        }
+        #number{
+            font-size: 50px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+            <p id="number">0</p>
+        <div class="row">
+            <button onclick="changeNum(-1)">-</button>
+            <button onclick="changeNum(1)">+</button>
+        </div>
+    </div>
+    <script>
+        let currentNum = 0;
+        function changeNum(num){
+                let number = document.getElementById("number");
+                currentNum += num;
+                number.textContent = currentNum;
+                if(currentNum < 0)
+                    number.style.color = "red";
+                else if(currentNum > 0)
+                    number.style.color = "green";
+                else if(currentNum == 0)
+                    number.style.color = "black";
+        }
+    </script>
+</body>
+</html>

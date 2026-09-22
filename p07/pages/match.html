@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เกมจับคู่</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, "Tahoma", sans-serif;
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    min-height: 100vh;
+    padding-top: 30px;
+}
+
+.game-container {
+    margin: 100px;
+    width: 300px;
+    text-align: center;
+}
+
+/* หัวข้อ */
+h1 {
+    display: inline-block;
+
+    margin: 0 0 20px 0;
+    padding: 5px 20px;
+
+    border-radius : 20px;
+    background-color: #c7d6b0;
+    color: #111;
+
+    font-size: 50px;
+    line-height: 1.2;
+}
+
+/* กระดาน 4 x 4 */
+.game-board {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+
+    width: 240px;
+    margin: 0 auto 18px auto;
+}
+
+/* ช่อง */
+.card {
+    width: 100px;
+    height: 100px;
+
+    background-color: #c8e58e;
+
+    border: 4px solid #e6f0c8;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 30px;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition: transform 0.15s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* เครื่องหมาย ? */
+.card.question {
+    font-size: 28px;
+    font-weight: bold;
+    color: #222;
+}
+
+/* ไพ่ที่เปิด */
+.card.open {
+    background-color: #c8e58e;
+    cursor: default;
+}
+
+/* ไพ่ที่จับคู่สำเร็จ */
+.card.matched {
+    background-color: #b9d47c;
+    cursor: default;
+}
+
+/* ปุ่ม Reset */
+#resetBtn {
+    width: 238px;
+    height: 45px;
+
+    border: none;
+    border-radius: 7px;
+
+    background-color: #808d63;
+    color: white;
+
+    font-size: 24px;
+
+    cursor: pointer;
+}
+
+#resetBtn:hover {
+    background-color: #707c56;
+}
+    </style>
+</head>
+
+<body>
+
+    <div class="game-container">
+
+        <h1>เกมจับคู่</h1>
+
+        <div id="game-board" class="game-board"></div>
+
+        <button id="resetBtn">Reset</button>
+
+    </div>
+
+    <script>
+        const board = document.getElementById("game-board");
+const resetBtn = document.getElementById("resetBtn");
+
+// ผลไม้ 8 คู่
+const fruits = [
+    "🍇", "🍇",
+    "🍎", "🍎",
+    "🍍", "🍍",
+    "🍊", "🍊",
+    "🍉", "🍉",
+    "🍓", "🍓",
+    "🍌", "🍌",
+    "🥝", "🥝"
+];
+
+let cards = [];
+
+let firstCard = null;
+let secondCard = null;
+
+let lockBoard = false;
+
+
+/* -------------------------
+   สุ่มตำแหน่ง
+------------------------- */
+function shuffle(array) {
+
+    for (let i = array.length - 1; i > 0; i--) {
+
+        const j = Math.floor(Math.random() * (i + 1));
+
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+
+    return array;
+}
+
+
+/* -------------------------
+   เริ่มเกม
+------------------------- */
+function startGame() {
+
+    board.innerHTML = "";
+
+    firstCard = null;
+    secondCard = null;
+
+    lockBoard = false;
+
+    cards = shuffle([...fruits]);
+
+    cards.forEach((fruit, index) => {
+
+        const card = document.createElement("div");
+
+        card.classList.add("card");
+        card.classList.add("question");
+
+        card.dataset.fruit = fruit;
+        card.dataset.index = index;
+
+        card.textContent = "?";
+
+        card.addEventListener("click", () => {
+
+            flipCard(card);
+
+        });
+
+        board.appendChild(card);
+    });
+}
+
+
+/* -------------------------
+   เปิดไพ่
+------------------------- */
+function flipCard(card) {
+
+    // ป้องกันการคลิกตอนกำลังรอ 2 วินาที
+    if (lockBoard) {
+        return;
+    }
+
+    // ถ้าเป็นใบเดิมที่เปิดอยู่
+    if (card === firstCard) {
+        return;
+    }
+
+    // ถ้าจับคู่สำเร็จแล้ว
+    if (card.classList.contains("matched")) {
+        return;
+    }
+
+    // เปิดไพ่
+    card.classList.remove("question");
+    card.classList.add("open");
+
+    card.textContent = card.dataset.fruit;
+
+
+    // ไพ่ใบแรก
+    if (firstCard === null) {
+
+        firstCard = card;
+
+        return;
+    }
+
+
+    // ไพ่ใบที่สอง
+    secondCard = card;
+
+    checkMatch();
+}
+
+
+/* -------------------------
+   ตรวจสอบคู่
+------------------------- */
+function checkMatch() {
+
+    const isMatch =
+        firstCard.dataset.fruit === secondCard.dataset.fruit;
+
+
+    if (isMatch) {
+
+        // ตรงกัน
+        firstCard.classList.remove("open");
+        secondCard.classList.remove("open");
+
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
+
+        resetTurn();
+
+    } else {
+
+        // ไม่ตรงกัน
+        lockBoard = true;
+
+        setTimeout(() => {
+
+            firstCard.classList.remove("open");
+            secondCard.classList.remove("open");
+
+            firstCard.classList.add("question");
+            secondCard.classList.add("question");
+
+            firstCard.textContent = "?";
+            secondCard.textContent = "?";
+
+            resetTurn();
+
+        }, 2000);
+    }
+}
+
+
+/* -------------------------
+   เตรียมรับการเปิดคู่ใหม่
+------------------------- */
+function resetTurn() {
+
+    firstCard = null;
+    secondCard = null;
+
+    lockBoard = false;
+}
+
+
+/* -------------------------
+   ปุ่ม Reset
+------------------------- */
+resetBtn.addEventListener("click", () => {
+
+    startGame();
+
+});
+
+
+/* เริ่มเกมครั้งแรก */
+startGame();
+    </script>
+</body>
+</html>

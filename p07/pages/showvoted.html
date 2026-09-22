@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Vote</title>
+    <style>
+        *{
+            margin : 0;
+            padding : 0;
+        }
+        .container{
+            width: 100%;
+            min-height: 100vh;
+            display : flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: rgb(0, 217, 255);
+        }
+        .container h1{
+            font-size: 40px;
+            font-weight: bold;
+        }
+        .column{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin : 20px;
+            gap : 30px;
+        }
+        .row{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            margin : 20px;
+            gap : 30px;
+
+        }
+        .vote{
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
+            border : 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .btn{
+            width: 200px; 
+            height: 50px; 
+            font-size: 20px;
+            border-radius : 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+    <h1>Vote the favorite</h1>
+
+    <div class="row">
+
+        <div class="column">
+            <button class="vote" id="one" style="background-image: url(/p07/image/001.jpg);"></button>
+            <p id="result1">0</p>
+        </div>
+
+        <div class="column">
+            <button class="vote" id="two" style="background-image: url(/p07/image/002.jpg);"></button>
+            <p id="result2">0</p>
+        </div>
+
+        <div class="column">
+            <button class="vote" id="three" style="background-image: url(/p07/image/003.jpg);"></button>
+            <p id="result3">0</p>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <a href="vote.html">
+            <button class="btn">Back to Vote</button>
+        </a>
+
+        <button class="btn" id="clearVote">Clear Vote</button>
+
+    </div>
+
+</div>
+
+<script>
+
+    // ดึงคะแนนจาก localStorage
+    let vote1 = Number(localStorage.getItem("vote1")) || 0;
+    let vote2 = Number(localStorage.getItem("vote2")) || 0;
+    let vote3 = Number(localStorage.getItem("vote3")) || 0;
+
+    // แสดงคะแนน
+    document.getElementById("result1").textContent = vote1;
+    document.getElementById("result2").textContent = vote2;
+    document.getElementById("result3").textContent = vote3;
+
+
+    // Clear Vote
+    document.getElementById("clearVote").addEventListener("click", clearVote);
+
+    function clearVote() {
+
+        vote1 = 0;
+        vote2 = 0;
+        vote3 = 0;
+
+        localStorage.setItem("vote1", 0);
+        localStorage.setItem("vote2", 0);
+        localStorage.setItem("vote3", 0);
+
+        document.getElementById("result1").textContent = 0;
+        document.getElementById("result2").textContent = 0;
+        document.getElementById("result3").textContent = 0;
+    }
+
+</script>
+
+</body>
+</html>

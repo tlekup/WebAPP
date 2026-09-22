@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI</title>
+    <style>
+        * {
+            margin: 0;
+            padding : 0;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            background: white;
+        }
+
+        h1 {
+            color: #4bb0c8;
+            font-size: 40px;
+            font-weight: 400;
+            margin: 0 0 34px 0;
+        }
+
+        .bmi-container {
+            width: 500px;
+            padding: 15px;
+            background: #83e49a;
+        }
+
+        .calculator {
+            background: #c6e9dc;
+            padding: 30px 25px;
+            box-shadow: 0 7px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .calculator h2 {
+            font-family: monospace;
+            font-size: 15px;
+            margin: 0 0 12px;
+            text-align: center;
+        }
+
+        .calculator label {
+            display: block;
+            font-family: monospace;
+            font-size: 15px;
+            margin: 8px 0 3px;
+        }
+
+        .calculator input {
+            width: 100%;
+            height: 30px;
+            border: 1px solid #c4ddd5;
+            background: #e5f5ef;
+            padding: 5px 10px;
+            font-family: monospace;
+            font-size: 15px;
+        }
+
+        .calculator button {
+            width: 100%;
+            height: 26px;
+            margin: 8px 0 10px;
+            border: none;
+            background: #82ed88;
+            cursor: pointer;
+            font-family: monospace;
+            font-size: 15px;
+        }
+
+        .calculator button:hover {
+            background: #6ddd74;
+        }
+
+        #condition {
+            font-family: monospace;
+            font-size: 15px;
+            margin-top: 18px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- <h1>1. Body Mass Index (BMI) Calculator</h1> -->
+
+<div class="bmi-container">
+    <div class="calculator">
+
+        <h2>Body Mass Index (BMI) Calculator</h2>
+
+        <label>Your Height (cm):</label>
+        <input type="number" id="height" value="">
+
+        <label>Your Weight (kg):</label>
+        <input type="number" id="weight" value="">
+
+        <button onclick="calculateBMI()">Compute BMI</button>
+
+        <input
+            type="text"
+            id="bmi"
+            value=""
+            readonly
+        >
+
+        <p id="condition">
+            Weight Condition:
+        </p>
+
+    </div>
+</div>
+
+<script>
+
+function calculateBMI() {
+    const height = Number(document.getElementById("height").value);
+    const weight = Number(document.getElementById("weight").value);
+
+    if (height <= 0 || weight <= 0) {
+        alert("Please enter valid height and weight.");
+        return;
+    }
+
+    // Convert cm to meters
+    const heightInMeter = height / 100;
+
+    // BMI formula
+    const bmi = weight / (heightInMeter * heightInMeter);
+
+    // Show BMI
+    document.getElementById("bmi").value = bmi.toFixed(2);
+
+    // Determine condition
+    let condition;
+
+    if (bmi < 18.5) {
+        condition = "Underweight";
+    } else if (bmi < 25) {
+        condition = "Normal weight";
+    } else if (bmi < 30) {
+        condition = "Overweight";
+    } else {
+        condition = "Obese";
+    }
+
+    document.getElementById("condition").textContent =
+        "Weight Condition: " + condition;
+}
+</script>
+
+</body>
+</html>

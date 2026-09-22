@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #fff;
+            color: #111;
+        }
+
+        .todo-wrapper {
+            width: 270px;
+            background: #9cff00;
+            padding: 12px;
+            margin: 40px auto;
+        }
+
+        .todo-input {
+            width: 100%;
+            height: 38px;
+            padding: 0 12px;
+            border: 1px solid #5b9bd5;
+            border-radius: 6px 6px 0 0;
+            outline: none;
+            font-size: 12px;
+        }
+
+        .todo-input:focus {
+            border-color: #278bd0;
+        }
+
+        .todo-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            background: #ffff00;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+            border-radius: 0 0 6px 6px;
+            overflow: hidden;
+        }
+
+        .todo-item {
+            min-height: 40px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px dotted #bbb;
+            font-size: 11px;
+        }
+
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+
+        .todo-text {
+            cursor: pointer;
+        }
+
+        .todo-item.completed .todo-text {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .todo-actions {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .check-box {
+            width: 13px;
+            height: 13px;
+            cursor: pointer;
+            accent-color: #008000;
+        }
+        .delete-btn {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            padding: 0;
+            font-size: 12px;
+        }
+
+        .check-btn {
+            color: #008000;
+        }
+
+        .delete-btn {
+        color : #ff3333;
+        font-size: 17px;
+        font-weight: bold;
+        }
+
+        .check-btn:hover,
+        .delete-btn:hover {
+            transform: scale(1.2);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="todo-wrapper">
+
+        <input
+            type="text"
+            class="todo-input"
+            placeholder="Enter your task"
+        >
+
+        <ul class="todo-list">
+
+            <li class="todo-item">
+                <span class="todo-text">todo 1</span>
+
+                <div class="todo-actions">
+                    <input type="checkbox" class="check-box">
+                    <button class="delete-btn">🗑</button>
+                </div>
+            </li>
+
+            <li class="todo-item">
+                <span class="todo-text">todo 2</span>
+
+                <div class="todo-actions">
+                    <input type="checkbox" class="check-box">
+                    <button class="delete-btn">🗑</button>
+                </div>
+            </li>
+
+            <li class="todo-item">
+                <span class="todo-text">todo 3</span>
+
+                <div class="todo-actions">
+                    <input type="checkbox" class="check-box">
+                    <button class="delete-btn">🗑</button>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+<script>
+    const input = document.querySelector(".todo-input");
+const list = document.querySelector(".todo-list");
+
+// Add a new task
+function addTask() {
+    const taskText = input.value.trim();
+
+    if (taskText === "") {
+        return;
+    }
+
+    createTask(taskText);
+
+    input.value = "";
+    input.focus();
+}
+
+// Create task element
+function createTask(text) {
+    const li = document.createElement("li");
+    li.className = "todo-item";
+
+    li.innerHTML = `
+        <span class="todo-text">${escapeHTML(text)}</span>
+
+        <div class="todo-actions">
+            <input type="checkbox" class="check-box">
+            <button class="delete-btn" title="Delete task">🗑</button>
+        </div>
+    `;
+
+    list.appendChild(li);
+}
+
+// Check / uncheck a task
+list.addEventListener("change", function (event) {
+    if (event.target.classList.contains("check-box")) {
+        const task = event.target.closest(".todo-item");
+
+        task.classList.toggle(
+            "completed",
+            event.target.checked
+        );
+    }
+});
+
+list.addEventListener("click", function (event) {
+    if (event.target.classList.contains("delete-btn")) {
+        const task = event.target.closest(".todo-item");
+        task.remove();
+    }
+});
+
+// Press Enter to add task
+input.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        addTask();
+    }
+});
+
+// Prevent HTML injection
+function escapeHTML(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+</script>
+
+</body>
+</html>
