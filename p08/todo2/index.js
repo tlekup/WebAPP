@@ -7,6 +7,11 @@ const PORT = 3000;
 // ให้เข้าถึงไฟล์ใน public
 app.use(express.static(path.join(__dirname, "public")));
 
+// หน้าแรก
+app.get("/", (req, res) => {
+    res.redirect("/home");
+});
+
 // /home
 app.get("/home", (req, res) => {
     res.sendFile(path.join(__dirname, "index.htm"));
